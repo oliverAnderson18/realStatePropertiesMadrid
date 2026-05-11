@@ -27,6 +27,21 @@ def get_url(card):
         return ""
 
 
+def get_image(card):
+    try:
+        image = card.find_element(By.CSS_SELECTOR, "img")
+
+        src = image.get_attribute("src")
+
+        if not src:
+            src = image.get_attribute("data-src")
+
+        return src or ""
+
+    except:
+        return ""
+
+
 def parse_card(card):
     title = text(card, ".ad-preview__title")
     card_text = card.text.lower()
@@ -43,6 +58,7 @@ def parse_card(card):
     return {
         "title": title,
         "url": get_url(card),
+        "image": get_image(card),
         "property_type": "unknown",
         "price": text(card, ".ad-preview__price"),
         "location": text(card, ".ad-preview__subtitle"),
@@ -122,7 +138,7 @@ while len(rows) < MAX_PROPERTIES:
 
 driver.quit()
 
-os.makedirs("RealStateAssingment", exist_ok=True)
+os.makedirs("data", exist_ok=True)
 
 csv_path = "data/properties.csv"
 

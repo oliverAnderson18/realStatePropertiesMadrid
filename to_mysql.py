@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS properties (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255),
     URL VARCHAR(500),
+    image VARCHAR(1000),
     property_type VARCHAR(50),
     price VARCHAR(50),
     location VARCHAR(255),
@@ -30,11 +31,12 @@ CREATE TABLE IF NOT EXISTS properties (
 for _, row in df.iterrows():
     cursor.execute("""
         INSERT INTO properties
-        (title, URL, property_type, price, location, rooms, bathrooms, square_meters, floor)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+        (title, URL, image, property_type, price, location, rooms, bathrooms, square_meters, floor)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
     """, (
         row["title"],
         row["url"],
+        row["image"],
         row["property_type"],
         row["price"],
         row["location"],

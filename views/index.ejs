@@ -4,27 +4,262 @@
   <title>Madrid Real Estate</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
+
 <body>
 
-  <h1>Madrid Real Estate Listings</h1>
+  <header class="hero">
+    <h1>Madrid Real Estate</h1>
+    <p>Browse, filter and explore property listings in Madrid.</p>
+  </header>
 
-  <div class="listings">
-    <% properties.forEach(property => { %>
-      <div class="card">
-        <h2><%= property.title %></h2>
+  <section class="filters-card">
 
-        <p><strong>Price:</strong> <%= property.price %></p>
-        <p><strong>Location:</strong> <%= property.location %></p>
-        <p>
-          <%= property.rooms %> rooms ·
-          <%= property.bathrooms %> bathrooms ·
-          <%= property.square_meters %> m²
-        </p>
+    <form action="/ai-search" method="GET" class="ai-search">
 
-        <a href="/property/<%= property.id %>">View details</a>
-      </div>
-    <% }) %>
-  </div>
+      <input
+        type="text"
+        name="prompt"
+        placeholder="Example: cheap flat in Chamartín with 2 rooms"
+        value="<%= aiPrompt || '' %>"
+      >
+
+      <button type="submit">
+        AI Search
+      </button>
+
+    </form>
+
+    <% if (aiError) { %>
+      <p class="ai-error">
+        <%= aiError %>
+      </p>
+    <% } %>
+
+  </section>
+
+  <section class="filters-card">
+
+    <form method="GET" class="filters">
+
+      <input
+        type="text"
+        name="location"
+        placeholder="Location"
+        value="<%= filters.location || '' %>"
+      >
+
+      <input
+        type="number"
+        name="min_price"
+        placeholder="Min price"
+        value="<%= filters.min_price || '' %>"
+      >
+
+      <input
+        type="number"
+        name="max_price"
+        placeholder="Max price"
+        value="<%= filters.max_price || '' %>"
+      >
+
+      <input
+        type="number"
+        name="min_square_meters"
+        placeholder="Min m²"
+        value="<%= filters.min_square_meters || '' %>"
+      >
+
+      <input
+        type="number"
+        name="max_square_meters"
+        placeholder="Max m²"
+        value="<%= filters.max_square_meters || '' %>"
+      >
+
+      <input
+        type="number"
+        name="rooms"
+        placeholder="Bedrooms"
+        value="<%= filters.rooms || '' %>"
+      >
+
+      <input
+        type="number"
+        name="bathrooms"
+        placeholder="Min bathrooms"
+        value="<%= filters.bathrooms || '' %>"
+      >
+
+      <select name="type">
+
+        <option value="">
+          Any type
+        </option>
+
+        <option
+          value="flat"
+          <%= filters.type === "flat" ? "selected" : "" %>
+        >
+          Flat
+        </option>
+
+        <option
+          value="house"
+          <%= filters.type === "house" ? "selected" : "" %>
+        >
+          House
+        </option>
+
+        <option
+          value="penthouse"
+          <%= filters.type === "penthouse" ? "selected" : "" %>
+        >
+          Penthouse
+        </option>
+
+        <option
+          value="studio"
+          <%= filters.type === "studio" ? "selected" : "" %>
+        >
+          Studio
+        </option>
+
+      </select>
+
+      <button type="submit">
+        Search
+      </button>
+
+      <a class="clear-link" href="/">
+        Clear
+      </a>
+
+    </form>
+
+  </section>
+
+  <main class="container">
+
+    <div class="results-header">
+
+      <h2>
+        Available properties
+      </h2>
+
+      <p>
+        <strong><%= properties.length %></strong>
+        results found
+      </p>
+
+    </div>
+
+    <div class="listings">
+
+      <% properties.forEach(property => { %>
+
+        <article class="property-card">
+
+          <% if (property.image) { %>
+
+            <img
+              class="property-image"
+              src="<%= property.image %>"
+              alt="<%= property.title %>"
+            >
+
+          <% } %>
+
+          <div class="property-content">
+
+            <p class="property-type">
+              <%= property.property_type %>
+            </p>
+
+            <h3>
+              <%= property.title
+                .replace("Piso", "Flat")
+                .replace("Ático", "Penthouse")
+                .replace("atico", "Penthouse")
+                .replace("Casa", "House")
+                .replace("Chalet", "House")
+                .replace("Estudio", "Studio")
+                .replace(" en ", " in ")
+              %>
+            </h3>
+
+            <p class="location">
+              <%= property.location %>
+            </p>
+
+            <p class="price">
+              <%= property.price %>
+            </p>
+
+            <div class="features">
+
+              <span>
+                <%= property.rooms || "N/A" %> bedrooms
+              </span>
+
+              <span>
+                <%= property.bathrooms || "N/A" %> bathrooms
+              </span>
+
+              <span>
+                <%= property.square_meters || "N/A" %> m²
+              </span>
+
+              <%
+                const floorNumber = parseInt(property.floor);
+                let floorText = "";
+
+                if (!isNaN(floorNumber)) {
+
+                  if (floorNumber === 1) {
+                    floorText = "1st floor";
+                  }
+
+                  else if (floorNumber === 2) {
+                    floorText = "2nd floor";
+                  }
+
+                  else if (floorNumber === 3) {
+                    floorText = "3rd floor";
+                  }
+
+                  else {
+                    floorText = `${floorNumber}th floor`;
+                  }
+
+                }
+              %>
+
+              <% if (floorText) { %>
+
+                <span>
+                  <%= floorText %>
+                </span>
+
+              <% } %>
+
+            </div>
+
+            <a
+              class="details-button"
+              href="/property/<%= property.id %>"
+            >
+              View details
+            </a>
+
+          </div>
+
+        </article>
+
+      <% }) %>
+
+    </div>
+
+  </main>
 
 </body>
 </html>
