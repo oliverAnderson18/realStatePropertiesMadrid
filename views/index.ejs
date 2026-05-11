@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Madrid Real Estate</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+  <h1>Madrid Real Estate Listings</h1>
+
+  <div class="listings">
+    <% properties.forEach(property => { %>
+      <div class="card">
+        <h2><%= property.title %></h2>
+
+        <p><strong>Price:</strong> <%= property.price %></p>
+        <p><strong>Location:</strong> <%= property.location %></p>
+        <p>
+          <%= property.rooms %> rooms ·
+          <%= property.bathrooms %> bathrooms ·
+          <%= property.square_meters %> m²
+        </p>
+
+        <a href="/property/<%= property.id %>">View details</a>
+      </div>
+    <% }) %>
+  </div>
+
+</body>
+</html>

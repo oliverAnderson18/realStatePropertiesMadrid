@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= property.title %></title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+  <a href="/">← Back</a>
+
+  <div class="detail">
+    <h1><%= property.title %></h1>
+
+    <p><strong>Price:</strong> <%= property.price %></p>
+    <p><strong>Type:</strong> <%= property.property_type %></p>
+    <p><strong>Location:</strong> <%= property.location %></p>
+    <p><strong>Rooms:</strong> <%= property.rooms %></p>
+    <p><strong>Bathrooms:</strong> <%= property.bathrooms %></p>
+    <p><strong>Square meters:</strong> <%= property.square_meters %></p>
+    <p><strong>Floor:</strong> <%= property.floor %></p>
+
+    <% if (property.url) { %>
+      <a href="<%= property.url %>" target="_blank">Open original listing</a>
+    <% } %>
+  </div>
+
+</body>
+</html>

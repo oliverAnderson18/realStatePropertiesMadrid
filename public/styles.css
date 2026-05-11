@@ -1,0 +1,32 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  margin: 40px;
+}
+
+h1 {
+  margin-bottom: 30px;
+}
+
+.listings {
+  display: grid;
+  gap: 20px;
+}
+
+.card,
+.detail {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.card h2 {
+  margin-top: 0;
+}
+
+a {
+  color: #d10000;
+  font-weight: bold;
+  text-decoration: none;
+}
