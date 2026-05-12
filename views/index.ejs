@@ -19,7 +19,7 @@
       <input
         type="text"
         name="prompt"
-        placeholder="Example: cheap flat in Chamartín with 2 rooms"
+        placeholder="Example: cheap flat in Chamartín with 2 bedrooms"
         value="<%= aiPrompt || '' %>"
       >
 
@@ -39,7 +39,7 @@
 
   <section class="filters-card">
 
-    <form method="GET" class="filters">
+    <form action="/" method="GET" class="filters">
 
       <input
         type="text"
@@ -80,13 +80,13 @@
         type="number"
         name="rooms"
         placeholder="Bedrooms"
-        value="<%= filters.rooms || '' %>"
+        value="<%= filters.rooms || filters.bedrooms || '' %>"
       >
 
       <input
         type="number"
         name="bathrooms"
-        placeholder="Min bathrooms"
+        placeholder="Bathrooms"
         value="<%= filters.bathrooms || '' %>"
       >
 
@@ -122,6 +122,77 @@
           <%= filters.type === "studio" ? "selected" : "" %>
         >
           Studio
+        </option>
+
+        <option
+          value="ground-floor apartment"
+          <%= filters.type === "ground-floor apartment" ? "selected" : "" %>
+        >
+          Ground-floor apartment
+        </option>
+
+      </select>
+
+      <select name="sort">
+
+        <option value="">
+          Sort by
+        </option>
+
+        <option
+          value="price_asc"
+          <%= filters.sort === "price_asc" ? "selected" : "" %>
+        >
+          Price: low to high
+        </option>
+
+        <option
+          value="price_desc"
+          <%= filters.sort === "price_desc" ? "selected" : "" %>
+        >
+          Price: high to low
+        </option>
+
+        <option
+          value="bedrooms_asc"
+          <%= filters.sort === "bedrooms_asc" ? "selected" : "" %>
+        >
+          Bedrooms: low to high
+        </option>
+
+        <option
+          value="bedrooms_desc"
+          <%= filters.sort === "bedrooms_desc" ? "selected" : "" %>
+        >
+          Bedrooms: high to low
+        </option>
+
+        <option
+          value="bathrooms_asc"
+          <%= filters.sort === "bathrooms_asc" ? "selected" : "" %>
+        >
+          Bathrooms: low to high
+        </option>
+
+        <option
+          value="bathrooms_desc"
+          <%= filters.sort === "bathrooms_desc" ? "selected" : "" %>
+        >
+          Bathrooms: high to low
+        </option>
+
+        <option
+          value="meters_asc"
+          <%= filters.sort === "meters_asc" ? "selected" : "" %>
+        >
+          Size: small to large
+        </option>
+
+        <option
+          value="meters_desc"
+          <%= filters.sort === "meters_desc" ? "selected" : "" %>
+        >
+          Size: large to small
         </option>
 
       </select>
