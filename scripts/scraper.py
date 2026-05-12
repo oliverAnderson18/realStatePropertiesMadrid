@@ -138,9 +138,9 @@ while len(rows) < MAX_PROPERTIES:
 
 driver.quit()
 
-os.makedirs("data", exist_ok=True)
+os.makedirs("../data", exist_ok=True)
 
-csv_path = "data/properties.csv"
+csv_path = "../data/properties.csv"
 
 with open(csv_path, "w", newline="", encoding="utf-8-sig") as file:
 

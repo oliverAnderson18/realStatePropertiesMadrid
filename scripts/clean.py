@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_csv("data/properties.csv")
+df = pd.read_csv("../data/properties.csv")
 
 df["title"] = df["title"].str.replace('"', "", regex=False)
 
@@ -23,4 +23,4 @@ df.loc[df["property_type"] == "ground-floor apartment", "floor"] = "ground floor
 df.loc[(df["property_type"] == "house") & (df["floor"] == ""), "floor"] = "not applicable"
 df.loc[(df["property_type"] == "flat") & (df["floor"] == ""), "floor"] = "unknown"
 
-df.to_csv("data/properties_clean.csv", index=False)
+df.to_csv("../data/properties_clean.csv", index=False)

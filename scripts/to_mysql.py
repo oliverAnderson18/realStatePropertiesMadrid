@@ -1,7 +1,7 @@
 import pandas as pd
 import mysql.connector
 
-df = pd.read_csv("data/properties_clean.csv").fillna("")
+df = pd.read_csv("../data/properties_clean.csv").fillna("")
 
 connection = mysql.connector.connect(
     host="localhost",
