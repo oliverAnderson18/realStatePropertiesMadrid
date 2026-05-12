@@ -1,13 +1,17 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from pathlib import Path
 import csv
-import os
 import time
 import re
 
 BASE_URL = "https://www.pisos.com"
 SEARCH_URL = "https://www.pisos.com/venta/pisos-madrid_capital_zona_urbana"
 MAX_PROPERTIES = 100
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+DATA_DIR = BASE_DIR / "data"
+CSV_PATH = DATA_DIR / "properties.csv"
 
 
 def text(parent, selector):
@@ -30,7 +34,6 @@ def get_url(card):
 def get_image(card):
     try:
         image = card.find_element(By.CSS_SELECTOR, "img")
-
         src = image.get_attribute("src")
 
         if not src:
@@ -77,37 +80,26 @@ seen = set()
 page = 1
 
 while len(rows) < MAX_PROPERTIES:
-
     url = SEARCH_URL if page == 1 else f"{SEARCH_URL}/{page}/"
 
     print(f"Reading page {page}: {url}")
 
     driver.get(url)
-
     time.sleep(2)
 
     if page == 1:
         try:
-            driver.find_element(
-                By.ID,
-                "didomi-notice-agree-button"
-            ).click()
-
+            driver.find_element(By.ID, "didomi-notice-agree-button").click()
             time.sleep(1)
-
         except:
             pass
 
-    cards = driver.find_elements(
-        By.CSS_SELECTOR,
-        "div.ad-preview"
-    )
+    cards = driver.find_elements(By.CSS_SELECTOR, "div.ad-preview")
 
     if not cards:
         break
 
     for card in cards:
-
         if len(rows) >= MAX_PROPERTIES:
             break
 
@@ -119,17 +111,12 @@ while len(rows) < MAX_PROPERTIES:
         if not data["title"] or not data["price"]:
             continue
 
-        key = (
-            data["title"] +
-            data["price"] +
-            data["location"]
-        )
+        key = data["title"] + data["price"] + data["location"]
 
         if key in seen:
             continue
 
         seen.add(key)
-
         rows.append(data)
 
         print(f"Saved {len(rows)}: {data['title']}")
@@ -138,18 +125,11 @@ while len(rows) < MAX_PROPERTIES:
 
 driver.quit()
 
-os.makedirs("../data", exist_ok=True)
+DATA_DIR.mkdir(exist_ok=True)
 
-csv_path = "../data/properties.csv"
-
-with open(csv_path, "w", newline="", encoding="utf-8-sig") as file:
-
-    writer = csv.DictWriter(
-        file,
-        fieldnames=rows[0].keys()
-    )
-
+with open(CSV_PATH, "w", newline="", encoding="utf-8-sig") as file:
+    writer = csv.DictWriter(file, fieldnames=rows[0].keys())
     writer.writeheader()
     writer.writerows(rows)
 
-print(f"\nSaved {len(rows)} properties to {csv_path}")
+print(f"\nSaved {len(rows)} properties to {CSV_PATH}")

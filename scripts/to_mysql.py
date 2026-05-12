@@ -1,7 +1,11 @@
 import pandas as pd
 import mysql.connector
+from pathlib import Path
 
-df = pd.read_csv("../data/properties_clean.csv").fillna("")
+BASE_DIR = Path(__file__).resolve().parent.parent
+csv_path = BASE_DIR / "data" / "properties_clean.csv"
+
+df = pd.read_csv(csv_path)
 
 connection = mysql.connector.connect(
     host="localhost",
