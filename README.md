@@ -19,7 +19,7 @@ The platform includes:
 The AI search allows users to search properties using natural language queries such as:
 
 ```text
-cheap flat in Chamartín with 2 bedrooms
+Flat in Salamanca with 2 bedrooms
 ```
 
 The application can also be used without AI through the classic filters.
@@ -176,7 +176,7 @@ For AI search:
 ## 1. Clone Repository
 
 ```bash
-git clone <repository-url>
+git clone [<repository-url>](https://github.com/oliverAnderson18/realStatePropertiesMadrid)
 cd realStatePropertiesMadrid
 ```
 
