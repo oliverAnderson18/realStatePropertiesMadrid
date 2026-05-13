@@ -176,7 +176,7 @@ For AI search:
 ## 1. Clone Repository
 
 ```bash
-git clone [<repository-url>](https://github.com/oliverAnderson18/realStatePropertiesMadrid)
+git clone https://github.com/oliverAnderson18/realStatePropertiesMadrid
 cd realStatePropertiesMadrid
 ```
 
